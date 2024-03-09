@@ -23,7 +23,7 @@ exports.SignIn = async (req, res) => {
         }
       });
     } else {
-      const fileName = 'default' + fullname + '.png';
+      const fileName = 'default' + fullname + '.jpg';
       const filePath = `./public/default.jpg`;
       const output = `./public/users/${fileName}`;
 
