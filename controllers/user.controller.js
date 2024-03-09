@@ -98,6 +98,7 @@ exports.updateUser = async (req, res) => {
             username: req.body.username,
             imgUrl: url,
             img: fileName,
+            email: req.body.email,
             phone: req.body.phone,
             address: req.body.address
           }
