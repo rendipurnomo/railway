@@ -1,6 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
+const fs = require('fs');
+const path = require('path');
 
 exports.SignIn = async (req, res) => {
   const auth = req.body.authResult
@@ -21,8 +23,18 @@ exports.SignIn = async (req, res) => {
         }
       });
     } else {
+      const fileName = 'default' + fullname + '.png';
+      const filePath = `./public/default.jpg`;
+      const output = `./public/users/${fileName}`;
+
+      const img = fs.readFileSync(filePath);
+      fs.writeFileSync(output, img);
+
+      const url = `${req.protocol}://${req.get('host')}/users/${fileName}`;
       const insertResult = await prisma.users.create({
         username: auth.user.username,
+        img: fileName,
+        imgUrl: url,
         uid: auth.user.uid,
         accessToken: auth.accessToken
       });
