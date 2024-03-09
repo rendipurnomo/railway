@@ -29,7 +29,7 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
-  const fileName = 'default' + fullname + '.jpg';
+  const fileName = 'default' + req.body.username + '.jpg';
       const filePath = `./public/default.jpg`;
       const output = `./public/users/${fileName}`;
 
