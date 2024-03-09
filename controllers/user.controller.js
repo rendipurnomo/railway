@@ -29,9 +29,23 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
+  const fileName = 'default' + fullname + '.jpg';
+      const filePath = `./public/default.jpg`;
+      const output = `./public/users/${fileName}`;
+
+      const img = fs.readFileSync(filePath);
+      fs.writeFileSync(output, img);
+
+      const url = `${req.protocol}://${req.get('host')}/users/${fileName}`;
   try {
     const user = await prisma.users.create({
-      data: req.body
+      data: {
+        username: req.body.username,
+        img: fileName,
+        imgUrl: url,
+        uid: req.body.uid,
+        accessToken: req.body.accessToken
+      }
     })
     res.status(201).json(user);
   } catch (error) {
